@@ -22,8 +22,8 @@ class ExampleViewController: UIViewController, UICollectionViewDataSource, UICol
         // Do any additional setup after loading the view.
         
         // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        self.collectionView!.registerClass(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifierHeader)
+        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseIdentifierHeader)
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,7 +31,7 @@ class ExampleViewController: UIViewController, UICollectionViewDataSource, UICol
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         collectionView?.collectionViewLayout.invalidateLayout()
@@ -52,7 +52,7 @@ class ExampleViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (section % 2 == 0) {
             return 6
         }
@@ -60,20 +60,19 @@ class ExampleViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath)
         
         // Configure the cell
-        cell.backgroundColor = UIColor.whiteColor()
-        cell.setBorder(UIColor.grayColor().colorWithAlphaComponent(0.5))
+        cell.backgroundColor = UIColor.white
+        cell.setBorder(color: UIColor.gray.withAlphaComponent(0.5))
         return cell
     }
-
     
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        if (kind == UICollectionElementKindSectionHeader) {
-            let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: reuseIdentifierHeader, forIndexPath: indexPath)
+        if (kind == UICollectionView.elementKindSectionHeader) {
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifierHeader, for: indexPath as IndexPath)
 
             view.backgroundColor = UIColor(white: 1, alpha: 0.6)
             return view
